@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | CareerPath</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        // Configuration to ensure Tailwind classes are interpreted correctly on all pages
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: { primary: '#6366f1', secondary: '#ec4899', accent: '#8b5cf6' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center cursor-pointer" onclick="router('home')">
+                    <i class="fa-solid fa-compass text-3xl text-primary mr-2"></i>
+                    <span class="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">CareerPath</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="router('home')" class="hover:text-primary font-medium transition">Home</a>
+                    <a href="#" onclick="router('explore')" class="hover:text-primary font-medium transition">Explore Careers</a>
+                    <a href="#" onclick="router('adminLogin')" class="hover:text-primary font-medium transition">Admin</a>
+                    <div id="auth-buttons">
+                        <button onclick="router('login')" class="px-5 py-2 rounded-full border border-primary text-primary font-medium hover:bg-primary hover:text-white transition">Log In</button>
+                        <button onclick="router('signup')" class="ml-3 px-5 py-2 rounded-full btn-gradient font-medium shadow-lg hover:shadow-xl transition">Sign Up</button>
+                    </div>
+                    <div id="user-profile" class="hidden items-center space-x-3">
+                        <span id="username-display" class="font-medium text-gray-700">Student</span>
+                        <button onclick="logout()" class="text-gray-500 hover:text-red-500"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+                <!-- Mobile Menu Button - Left as placeholder -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- HOME PAGE CONTENT -->
+        <section id="home-content">
+            <div class="flex flex-col md:flex-row items-center py-12 md:py-20">
+                <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
+                    <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                        Discover Your <br>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Perfect Career</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Confused after your studies? Take our quick, personalized assessment to find strengths and career paths based on your qualification.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <button onclick="checkAuthAndStart()" class="px-8 py-4 rounded-full btn-gradient text-lg font-bold shadow-lg transform transition hover:scale-105">
+                            Start Assessment <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                        <button onclick="router('explore')" class="px-8 py-4 rounded-full glass-card text-lg font-bold text-gray-700 hover:text-primary">
+                            Explore Options
+                        </button>
+                    </div>
+                    
+                    <div class="mt-12 flex items-center justify-center md:justify-start space-x-8 text-center">
+                        <div>
+                            <h3 class="text-3xl font-bold text-primary">500+</h3>
+                            <p class="text-sm text-gray-500">Career Paths</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-secondary">10k+</h3>
+                            <p class="text-sm text-gray-500">Students Helped</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-accent">95%</h3>
+                            <p class="text-sm text-gray-500">Accuracy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative flex justify-center">
+                    <!-- Simple illustrative card visual -->
+                    <div class="glass-card p-6 w-80 shadow-2xl">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <i class="fa-solid fa-flask text-2xl text-blue-600"></i>
+                            <h4 class="font-bold text-xl">My Profile</h4>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Your analysis shows:</p>
+                        <div class="space-y-3">
+                            <div class="h-2 bg-gray-100 rounded-full"><div class="h-2 bg-blue-500 rounded-full" style="width: 85%"></div></div>
+                            <p class="text-sm font-medium text-blue-800">85% Technical</p>
+                            <div class="h-2 bg-gray-100 rounded-full"><div class="h-2 bg-pink-500 rounded-full" style="width: 60%"></div></div>
+                            <p class="text-sm font-medium text-pink-800">60% Creative</p>
+                        </div>
+                        <p class="text-xs mt-4 text-center text-gray-400">Recommendation: Software Engineering</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Grid -->
+            <div class="py-16">
+                <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 text-center">
+                        <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center text-primary text-2xl mb-6"><i class="fa-solid fa-user-graduate"></i></div>
+                        <h3 class="text-xl font-bold mb-3">1. Select Qualification</h3>
+                        <p class="text-gray-600">Choose your current education level to customize the test.</p>
+                    </div>
+                    <div class="glass-card p-8 text-center">
+                        <div class="w-16 h-16 mx-auto bg-pink-100 rounded-full flex items-center justify-center text-secondary text-2xl mb-6"><i class="fa-solid fa-clipboard-question"></i></div>
+                        <h3 class="text-xl font-bold mb-3">2. Take Assessment</h3>
+                        <p class="text-gray-600">Answer questions about your interests, skills, and personality.</p>
+                    </div>
+                    <div class="glass-card p-8 text-center">
+                        <div class="w-16 h-16 mx-auto bg-purple-100 rounded-full flex items-center justify-center text-accent text-2xl mb-6"><i class="fa-solid fa-chart-pie"></i></div>
+                        <h3 class="text-xl font-bold mb-3">3. Get Recommendations</h3>
+                        <p class="text-gray-600">View detailed reports and explore perfectly matched career paths.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="glass-panel mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-600">© 2025 PathFinder Career Assessment Tool. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            createModal();
+            updateAuthUI();
+        }
+    </script>
+</body>
+</html>

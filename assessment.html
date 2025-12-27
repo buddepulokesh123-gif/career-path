@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Assessment | PathFinder</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        // Configuration to ensure Tailwind classes are interpreted correctly on all pages
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: { primary: '#6366f1', secondary: '#ec4899', accent: '#8b5cf6' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center cursor-pointer" onclick="router('home')">
+                    <i class="fa-solid fa-compass text-3xl text-primary mr-2"></i>
+                    <span class="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">CareerPath</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="router('home')" class="hover:text-primary font-medium transition">Home</a>
+                    <a href="#" onclick="router('explore')" class="hover:text-primary font-medium transition">Explore Careers</a>
+                    <a href="#" onclick="router('adminLogin')" class="hover:text-primary font-medium transition">Admin</a>
+                    <div id="auth-buttons">
+                        <button onclick="router('login')" class="px-5 py-2 rounded-full border border-primary text-primary font-medium hover:bg-primary hover:text-white transition">Log In</button>
+                        <button onclick="router('signup')" class="ml-3 px-5 py-2 rounded-full btn-gradient font-medium shadow-lg hover:shadow-xl transition">Sign Up</button>
+                    </div>
+                    <div id="user-profile" class="hidden items-center space-x-3">
+                        <span id="username-display" class="font-medium text-gray-700">Student</span>
+                        <button onclick="logout()" class="text-gray-500 hover:text-red-500"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+                <!-- Mobile Menu Button - Left as placeholder -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- ASSESSMENT SELECTION CONTENT -->
+        <section id="assessment-setup" class="py-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Select Your Qualification</h2>
+                <p class="text-gray-600">We will customize the questions based on your current education level to provide the most relevant path.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 10th Card -->
+                <div class="glass-card p-6 cursor-pointer hover:bg-white/50 transition group text-center" onclick="startAssessment('10th')">
+                    <div class="w-14 h-14 mx-auto bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">10th Class</h3>
+                    <p class="text-sm text-gray-500">Find the right stream: Science, Commerce, Arts, or Vocational.</p>
+                </div>
+
+                <!-- 12th Card -->
+                <div class="glass-card p-6 cursor-pointer hover:bg-white/50 transition group text-center" onclick="startAssessment('12th')">
+                    <div class="w-14 h-14 mx-auto bg-pink-100 rounded-full flex items-center justify-center text-pink-600 text-xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">12th Class</h3>
+                    <p class="text-sm text-gray-500">Choose your major: Engineering, Medical, Defence, or Humanities.</p>
+                </div>
+
+                <!-- Diploma Card -->
+                <div class="glass-card p-6 cursor-pointer hover:bg-white/50 transition group text-center" onclick="startAssessment('Diploma')">
+                    <div class="w-14 h-14 mx-auto bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Diploma / Polytechnic</h3>
+                    <p class="text-sm text-gray-500">Explore technical jobs or opportunities for lateral entry into degrees.</p>
+                </div>
+
+                <!-- B.Tech Card -->
+                <div class="glass-card p-6 cursor-pointer hover:bg-white/50 transition group text-center" onclick="startAssessment('BTech')">
+                    <div class="w-14 h-14 mx-auto bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">B.Tech / UG</h3>
+                    <p class="text-sm text-gray-500">Decide between IT, Core Eng, MBA, Entrepreneurship, or Govt Exams.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="glass-panel mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-600">© 2025 PathFinder Career Assessment Tool. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            createModal();
+            updateAuthUI();
+        }
+    </script>
+</body>
+</html>

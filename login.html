@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup | PathFinder</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        // Configuration to ensure Tailwind classes are interpreted correctly on all pages
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: { primary: '#6366f1', secondary: '#ec4899', accent: '#8b5cf6' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center cursor-pointer" onclick="router('home')">
+                    <i class="fa-solid fa-compass text-3xl text-primary mr-2"></i>
+                    <span class="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">CareerPath</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="router('home')" class="hover:text-primary font-medium transition">Home</a>
+                    <a href="#" onclick="router('explore')" class="hover:text-primary font-medium transition">Explore Careers</a>
+                    <a href="#" onclick="router('adminLogin')" class="hover:text-primary font-medium transition">Admin</a>
+                    <div id="auth-buttons">
+                        <button onclick="router('login')" class="px-5 py-2 rounded-full border border-primary text-primary font-medium hover:bg-primary hover:text-white transition">Log In</button>
+                        <button onclick="router('signup')" class="ml-3 px-5 py-2 rounded-full btn-gradient font-medium shadow-lg hover:shadow-xl transition">Sign Up</button>
+                    </div>
+                    <div id="user-profile" class="hidden items-center space-x-3">
+                        <span id="username-display" class="font-medium text-gray-700">Student</span>
+                        <button onclick="logout()" class="text-gray-500 hover:text-red-500"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+                <!-- Mobile Menu Button - Left as placeholder -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- LOGIN FORM -->
+        <section id="login-form" class="max-w-md mx-auto py-20">
+            <div class="glass-card p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-center mb-2">Welcome Back</h2>
+                <p class="text-center text-gray-500 mb-8">Login to continue your journey</p>
+                <form onsubmit="handleLogin(event)">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-lg bg-white/50 border border-gray-300 focus:outline-none focus:border-primary transition" placeholder="student@example.com">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                        <input type="password" required class="w-full px-4 py-3 rounded-lg bg-white/50 border border-gray-300 focus:outline-none focus:border-primary transition" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="w-full btn-gradient py-3 rounded-lg font-bold text-lg shadow-md">Log In</button>
+                </form>
+                <p class="text-center mt-6 text-gray-600">Don't have an account? <a href="#" onclick="router('signup')" class="text-primary font-bold hover:underline">Sign Up</a></p>
+            </div>
+        </section>
+
+        <!-- SIGNUP FORM -->
+        <section id="signup-form" class="max-w-md mx-auto py-20 hidden">
+            <div class="glass-card p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-center mb-2">Create Account</h2>
+                <p class="text-center text-gray-500 mb-8">Start your career discovery today</p>
+                <form onsubmit="handleSignup(event)">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Full Name</label>
+                        <input type="text" id="signup-name" required class="w-full px-4 py-3 rounded-lg bg-white/50 border border-gray-300 focus:outline-none focus:border-primary transition" placeholder="John Doe">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-lg bg-white/50 border border-gray-300 focus:outline-none focus:border-primary transition" placeholder="student@example.com">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                        <input type="password" required class="w-full px-4 py-3 rounded-lg bg-white/50 border border-gray-300 focus:outline-none focus:border-primary transition" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="w-full btn-gradient py-3 rounded-lg font-bold text-lg shadow-md">Sign Up</button>
+                </form>
+                <p class="text-center mt-6 text-gray-600">Already have an account? <a href="#" onclick="router('login')" class="text-primary font-bold hover:underline">Log In</a></p>
+            </div>
+        </section>
+
+    </main>
+    <footer class="glass-panel mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-600">© 2025 PathFinder Career Assessment Tool. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Ensure the correct form is shown on page load based on URL hash
+        window.onload = function() {
+            createModal();
+            updateAuthUI();
+        }
+    </script>
+</body>
+</html>

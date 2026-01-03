@@ -592,36 +592,24 @@ window.renderAdminDashboard = function() {
 }
 
 // --- INITIALIZATION ---
-window.onload = function() {
-    createModal();
-    updateAuthUI();
+ // --- INITIALIZATION ---
+window.addEventListener('DOMContentLoaded', function() {
+    // 1. Run basic UI setup
+    if (typeof createModal === "function") createModal();
+    if (typeof updateAuthUI === "function") updateAuthUI();
     
-    // Check which page we are on and call the appropriate rendering function
-    const pathname = window.location.pathname.split('/').pop();
+    // 2. Fix the Path Detection
+    // This gets just the filename (e.g., 'questions-10th.html')
+    const page = window.location.pathname.split('/').pop();
 
-    if (pathname === PATHS.q10th || pathname === PATHS.q12th || pathname === PATHS.qDiploma || pathname === PATHS.qBTech) {
-        // If question data is missing (direct load), redirect to setup
-        if (loadState('currentLevel') === null) {
-            router('assessmentSetup');
-            return;
-        }
-        renderQuestion();
-    } else if (pathname === PATHS.results) {
-        renderResultsPage();
-    } else if (pathname === PATHS.explore) {
-        // Default filter on load
-        filterCategory('All');
-    } else if (pathname === PATHS.adminLogin.split('#')[0]) {
-        const dashboardContent = document.getElementById('admin-dashboard-content');
-        const loginContent = document.getElementById('admin-login-content');
+    // 3. Logic to render the correct page
+    if (page.includes('questions-10th.html') || 
+        page.includes('questions-12th.html') || 
+        page.includes('questions-diploma.html') || 
+        page.includes('questions-btech.html')) {
         
-        if (window.location.hash === '#dashboard' && loadState('isAdmin')) {
-            if (loginContent) loginContent.classList.add('hidden');
-            if (dashboardContent) dashboardContent.classList.remove('hidden');
-            renderAdminDashboard();
-        } else {
-            if (loginContent) loginContent.classList.remove('hidden');
-            if (dashboardContent) dashboardContent.classList.add('hidden');
-        }
+        renderQuestion();
+    } else if (page.includes('results.html')) {
+        renderResultsPage();
     }
-}
+});

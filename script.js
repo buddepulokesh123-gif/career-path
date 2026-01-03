@@ -590,7 +590,8 @@ window.renderAdminDashboard = function() {
     }
     // Mock data population logic can go here if needed, but the current HTML uses mock display data.
 }
- // --- INITIALIZATION ---
+
+// --- INITIALIZATION ---
 window.addEventListener('DOMContentLoaded', function() {
     // 1. Run basic UI setup
     if (typeof createModal === "function") createModal();
@@ -610,4 +611,4 @@ window.addEventListener('DOMContentLoaded', function() {
     } else if (page.includes('results.html')) {
         renderResultsPage();
     }
-}); 
+});
